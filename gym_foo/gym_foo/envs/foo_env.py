@@ -76,7 +76,7 @@ class FooEnv(gym.Env):
         self.params["PerspectiveCamera.to_world"] = mi.Transform4f.look_at(self.position,self.eye_direction,self.up)
         self.scene.parameters_changed()
 
-        #compute reward (it is not sparse at all) (it's the cosine sim between the eye-target direction and eye-light direction.)
+        #compute reward (it is not sparse at all)
         direc1 = self.eye_direction-self.position
         direc1 = direc1/np.linalg.norm(direc1)
         direc2 = self.light_pos-self.position
