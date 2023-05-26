@@ -1,0 +1,63 @@
+<scene version="3.0.0">
+	<default name="integrator" value="path" />
+	<default name="spp" value="5" />
+	<default name="resy" value="100" />
+	<default name="resx" value="100" />
+	<default name="max_depth" value="65" />
+	<integrator type="$integrator">
+		<integer name="max_depth" value="$max_depth" />
+	</integrator>
+	<sensor type="perspective">
+		<float name="fov" value="19.5" />
+		<transform name="to_world">
+			<matrix value="-1 0 0 0 0 1 0 1 0 0 -1 6.8 0 0 0 1" />
+		</transform>
+		<sampler type="independent">
+			<integer name="sample_count" value="$spp" />
+		</sampler>
+		<film type="hdrfilm">
+			<integer name="width" value="$resx" />
+			<integer name="height" value="$resy" />
+			<string name="file_format" value="openexr" />
+			<string name="pixel_format" value="rgb" />
+			<rfilter type="tent" />
+		</film>
+	</sensor>
+
+	<bsdf type="twosided" id="TallBoxBSDF">
+		<bsdf type="diffuse">
+			<rgb name="reflectance" value="0.725, 0.71, 0.68" />
+		</bsdf>
+	</bsdf>
+	<bsdf type="twosided" id="FloorBSDF">
+		<bsdf type="diffuse">
+			<rgb name="reflectance" value="0.5, 0.71, 0.8" />
+		</bsdf>
+	</bsdf>
+
+	<bsdf type="twosided" id="LightBSDF">
+		<bsdf type="diffuse">
+			<rgb name="reflectance" value="0, 0, 0" />
+		</bsdf>
+	</bsdf>
+
+	<shape type="rectangle" id="Floor">
+		<transform name="to_world">
+			<matrix value="-4.37114e-008 1 4.37114e-008 0 0 -8.74228e-008 2 0 1 4.37114e-008 1.91069e-015 0 0 0 0 1" />
+		</transform>
+		<ref id="FloorBSDF" />
+	</shape>
+
+	<shape type="cube" id="ShortBox">
+		<transform name="to_world">
+			<matrix value="0.0851643 0.289542 1.31134e-008 0.328631 3.72265e-009 1.26563e-008 -0.3 0.3 -0.284951 0.0865363 5.73206e-016 0.374592 0 0 0 1" />
+		</transform>
+		<ref id="TallBoxBSDF" />
+	</shape>
+
+	<emitter type="point" id="Light">
+		<rgb name="intensity" value="1"/>
+		<point name="position" x="0" y="0" z="-2"/>
+	</emitter>
+
+</scene>
